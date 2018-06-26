@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: aichat-api
+  datasource:
+    url: jdbc:mysql://ip:port/chat?useUnicode=true&characterEncoding=utf8
+    username: 
+    password: 
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+
+server:
+  port: 8888
+  session:
+    timeout: 28800 # in seconds, 8h, TODO SpringSession无关
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.aichat.dao.genrated.dao
+
+
+
+
+logging:
+    #file:   # 日志文件,绝对路径或相对路径
+    #path:   # 保存日志文件目录路径
+    #config: # 日志配置文件,Spring Boot默认使用classpath路径下的日志配置文件,如:logback.xml
+    level:  # 日志级别
+        org.springframework.web: INFO # 配置spring web日志级别
+        com.aichat.dao.genrated.dao: DEBUG
+

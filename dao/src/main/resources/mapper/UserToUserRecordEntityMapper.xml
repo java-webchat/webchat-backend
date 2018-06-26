@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aichat.dao.genrated.dao.UserToUserRecordEntityMapper">
+  <resultMap id="BaseResultMap" type="com.aichat.dao.genrated.model.UserToUserRecordEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_relation_id" jdbcType="INTEGER" property="userRelationId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="send_id" jdbcType="INTEGER" property="sendId" />
+    <result column="send_type" jdbcType="INTEGER" property="sendType" />
+    <result column="recive_id" jdbcType="INTEGER" property="reciveId" />
+    <result column="recive_type" jdbcType="INTEGER" property="reciveType" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_relation_id, content, send_id, send_type, recive_id, recive_type, create_date
+  </sql>
+  <select id="selectByExample" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_to_user_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_to_user_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_to_user_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntityExample">
+    delete from user_to_user_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_to_user_record (user_relation_id, content, send_id, 
+      send_type, recive_id, recive_type, 
+      create_date)
+    values (#{userRelationId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{sendId,jdbcType=INTEGER}, 
+      #{sendType,jdbcType=INTEGER}, #{reciveId,jdbcType=INTEGER}, #{reciveType,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_to_user_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userRelationId != null">
+        user_relation_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="sendId != null">
+        send_id,
+      </if>
+      <if test="sendType != null">
+        send_type,
+      </if>
+      <if test="reciveId != null">
+        recive_id,
+      </if>
+      <if test="reciveType != null">
+        recive_type,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userRelationId != null">
+        #{userRelationId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null">
+        #{sendId,jdbcType=INTEGER},
+      </if>
+      <if test="sendType != null">
+        #{sendType,jdbcType=INTEGER},
+      </if>
+      <if test="reciveId != null">
+        #{reciveId,jdbcType=INTEGER},
+      </if>
+      <if test="reciveType != null">
+        #{reciveType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntityExample" resultType="java.lang.Long">
+    select count(*) from user_to_user_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_to_user_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userRelationId != null">
+        user_relation_id = #{record.userRelationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendId != null">
+        send_id = #{record.sendId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendType != null">
+        send_type = #{record.sendType,jdbcType=INTEGER},
+      </if>
+      <if test="record.reciveId != null">
+        recive_id = #{record.reciveId,jdbcType=INTEGER},
+      </if>
+      <if test="record.reciveType != null">
+        recive_type = #{record.reciveType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_to_user_record
+    set id = #{record.id,jdbcType=INTEGER},
+      user_relation_id = #{record.userRelationId,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      send_id = #{record.sendId,jdbcType=INTEGER},
+      send_type = #{record.sendType,jdbcType=INTEGER},
+      recive_id = #{record.reciveId,jdbcType=INTEGER},
+      recive_type = #{record.reciveType,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntity">
+    update user_to_user_record
+    <set>
+      <if test="userRelationId != null">
+        user_relation_id = #{userRelationId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null">
+        send_id = #{sendId,jdbcType=INTEGER},
+      </if>
+      <if test="sendType != null">
+        send_type = #{sendType,jdbcType=INTEGER},
+      </if>
+      <if test="reciveId != null">
+        recive_id = #{reciveId,jdbcType=INTEGER},
+      </if>
+      <if test="reciveType != null">
+        recive_type = #{reciveType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aichat.dao.genrated.model.UserToUserRecordEntity">
+    update user_to_user_record
+    set user_relation_id = #{userRelationId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      send_id = #{sendId,jdbcType=INTEGER},
+      send_type = #{sendType,jdbcType=INTEGER},
+      recive_id = #{reciveId,jdbcType=INTEGER},
+      recive_type = #{reciveType,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
