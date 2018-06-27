@@ -304,7 +304,7 @@
         </table>
         -->
 
-        <table tableName="user_info" domainObjectName="UserInfoEntity">
+        <table tableName="user_robot_record" domainObjectName="UserRobotRecordEntity">
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
 

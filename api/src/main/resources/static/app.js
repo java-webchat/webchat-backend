@@ -18,7 +18,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/chatroom/', function (greeting) {
+        stompClient.subscribe('/topic/robot/1/', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -39,7 +39,7 @@ function sendName() {
         "content":$("#name").val(),
     };
     console.log();
-    stompClient.send("/chatroom", {}, dataobj);
+    stompClient.send("/robotChat", {}, JSON.stringify(dataobj));
 }
 
 function showGreeting(message) {

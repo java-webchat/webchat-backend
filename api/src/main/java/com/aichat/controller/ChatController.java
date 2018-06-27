@@ -4,6 +4,8 @@ import com.aichat.common.Response;
 import com.aichat.common.service.ChatService;
 import com.aichat.dao.genrated.model.GroupRecordEntity;
 import com.aichat.dao.genrated.model.UserInfoEntity;
+import com.aichat.dao.genrated.model.UserRobotRecordEntity;
+import com.aichat.dto.LoginInfoDto;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
@@ -40,11 +42,27 @@ public class ChatController extends BaseController {
     }
 
 
+    @ApiOperation(value = "机器人聊天记录列表")
+    @PostMapping("robotlist")
+    public Response<?> robotlist(){
+        LoginInfoDto LoginInfoDto = this.getLoginInfo();
+        List<UserRobotRecordEntity> robotList = chatService.getRobotList(LoginInfoDto.getUserId());
+        return success(robotList);
+    }
+
     @ApiOperation(value = "在线列表")
     @PostMapping("onlinelist")
     public Response<?> onlinelist(){
         List<UserInfoEntity> onlineList = chatService.getOnlineList();
         return success(onlineList);
+    }
+
+
+    @ApiOperation(value = "机器人聊天测试")
+    @PostMapping("robotChatTest")
+    public Response<?> robotChatTest(String question){
+        UserRobotRecordEntity robotRecordEntity = chatService.robotChatTest(question);
+        return success(robotRecordEntity);
     }
 
     @MessageMapping("/chatroom")
@@ -62,6 +80,36 @@ public class ChatController extends BaseController {
         }
 
     }
+
+    /**
+     * 机器人聊天
+     * @param chatStr
+     */
+    @MessageMapping("/robotChat")
+    public void robotChat(String chatStr){
+
+        logger.info("在线聊天信息：" + chatStr);
+        if(StringUtils.isNotBlank(chatStr)){
+            //step1 存储消息到记录库
+            JSONObject obj  = JSON.parseObject(chatStr);
+            UserRobotRecordEntity userRobotRecordEntity = JSONObject.toJavaObject(obj,UserRobotRecordEntity.class);
+            UserRobotRecordEntity dbUserRecordEntity = chatService.bulidEntityAndSaveUserRecord(userRobotRecordEntity);
+            //转发
+            fowardRobotQuestionMsg(dbUserRecordEntity);
+            UserRobotRecordEntity dbUserRobotRecordEntity = chatService.bulidEntityAndSaveRobotRecord(dbUserRecordEntity);
+            fowardRobotQuestionMsg(dbUserRobotRecordEntity);
+
+
+        }
+
+    }
+
+    private void fowardRobotQuestionMsg(UserRobotRecordEntity dbUserRobotRecordEntity) {
+        messagingTemplate.convertAndSend("/topic/robot/" + dbUserRobotRecordEntity.getOwnerId()+"/"  ,dbUserRobotRecordEntity);
+    }
+
+    //TODO 机器人聊天
+
 
     private void fowardChatRoomMsg(GroupRecordEntity dbGroupRecordEntity) {
 
